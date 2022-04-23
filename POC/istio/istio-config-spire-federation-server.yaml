@@ -1,0 +1,63 @@
+apiVersion: operator.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+spec:
+  profile: default
+  meshConfig:
+    trustDomain: example.org
+  values:
+    global:
+      hub: localhost:5000
+      tag: sdsv2
+      imagePullPolicy: "IfNotPresent"
+      imagePullSecrets:
+        - secret-registry
+    # This is used to customize the sidecar template
+    sidecarInjectorWebhook:
+      templates:
+        spire: |
+          spec:
+            containers:
+            - name: istio-proxy
+              volumeMounts:
+              - name: workload-socket
+                mountPath: /run/secrets/workload-spiffe-uds
+                readOnly: true
+            volumes:
+            - name: workload-socket
+              csi:
+                driver: "csi.spiffe.io"
+  components:
+    pilot:
+      k8s:
+        env:
+          # Disable istiod CA Sever functionality
+          - name: ENABLE_CA_SERVER
+            value: "true"
+          # Check that istio-agent's namespace and service account match the ones in the JWT token presented in the connection
+          - name: PILOT_ENABLE_XDS_IDENTITY_CHECK
+            value: "true"
+    ingressGateways:
+     - name: istio-ingressgateway
+       enabled: true
+       label:
+         istio: ingressgateway
+       k8s:
+         podAnnotations:
+           spiffe.io/federatesWith: "domain.test"
+         overlays:
+           - apiVersion: apps/v1
+             kind: Deployment
+             name: istio-ingressgateway
+             patches:
+               - path: spec.template.spec.volumes.[name:workload-socket]
+                 value:
+                   name: workload-socket
+                   csi:
+                     driver: "csi.spiffe.io"
+               - path: spec.template.spec.containers.[name:istio-proxy].volumeMounts.[name:workload-socket]
+                 value:
+                   name: workload-socket
+                   mountPath: "/run/secrets/workload-spiffe-uds"
+                   readOnly: true

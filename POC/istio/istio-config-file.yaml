@@ -1,0 +1,32 @@
+apiVersion: operator.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+spec:
+  profile: default
+  meshConfig:
+    trustDomain: example.org
+  values:
+    global:
+      hub: public.ecr.aws/e4m8j0n8/mithril
+      tag: sds-latest
+      imagePullPolicy: "IfNotPresent"
+      imagePullSecrets:
+        - secret-registry
+    # This is used to customize the sidecar template
+  components:
+    pilot:
+      k8s:
+        env:
+          # Disable istiod CA Sever functionality
+          - name: ENABLE_CA_SERVER
+            value: "true"
+          # Check that istio-agent's namespace and service account match the ones in the JWT token presented in the connection
+          - name: PILOT_ENABLE_XDS_IDENTITY_CHECK
+            value: "true"
+    ingressGateways:
+      - name: istio-ingressgateway
+        enabled: true
+        label:
+          istio: ingressgateway
+

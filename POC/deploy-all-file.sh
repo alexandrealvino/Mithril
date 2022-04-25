@@ -18,7 +18,7 @@ kubectl rollout status statefulset -n spire spire-server
 kubectl -n spire rollout status daemonset spire-agent
 
 echo -e "\n${BLUE}Deploying Istio with file certificates...${NC}\n"
-(cd istio ; ./deploy-istio.sh)
+(cd istio ; ./deploy-istio-spire-file.sh)
 #kubectl apply -f ingress.yaml
 kubectl apply -f ingressv2.yaml
 

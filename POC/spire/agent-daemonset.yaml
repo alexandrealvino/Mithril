@@ -37,7 +37,7 @@ spec:
             - name: spire-bundle
               mountPath: /run/spire/bundle
             - name: spire-agent-socket-dir
-              mountPath: /run/spire/sockets
+              mountPath: /run/secrets/workload-spiffe-uds
             - name: spire-token
               mountPath: /var/run/secrets/tokens
           livenessProbe:

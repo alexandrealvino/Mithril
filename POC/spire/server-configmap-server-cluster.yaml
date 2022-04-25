@@ -27,7 +27,7 @@ data:
             port = 8443
         }
         federates_with "domain.test" {
-          bundle_endpoint_url = "https://192.168.0.54:4002"
+          bundle_endpoint_url = "https://192.168.0.16:4002"
           bundle_endpoint_profile "https_spiffe" {
             endpoint_spiffe_id = "spiffe://domain.test/spire/server"
           }

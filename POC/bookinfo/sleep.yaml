@@ -40,25 +40,6 @@ spec:
         - ip: "192.168.0.16"
           hostnames:
             - "productpage.default.svc"
-      initContainers:
-        - name: fetch-config
-          image: gcr.io/spiffe-io/spire-agent:1.1.1
-          command: [ "/bin/sh" ]
-          args:
-            - "-c"
-            - |
-              sleep 5 && /opt/spire/bin/spire-agent api fetch \
-              -socketPath /run/secrets/workload-identity/socket -write . && ls /sleep-certs/ &&
-              mv svid.0.key /sleep-certs/sleep-key.pem && \
-              mv svid.0.pem /sleep-certs/sleep-svid.pem && \
-              mv bundle.0.pem /sleep-certs/root-cert.pem && \
-              chmod 644 /sleep-certs/*
-          volumeMounts:
-            - name: sleep-certs
-              mountPath: /sleep-certs
-            - name: workload-identity
-              mountPath: /run/secrets/workload-identity
-              readOnly: true
       containers:
       - name: sleep
         image: curlimages/curl
@@ -69,8 +50,6 @@ spec:
           name: secret-volume
         - name: tmp
           mountPath: /tmp
-        - name: sleep-certs
-          mountPath: /sleep-certs
       volumes:
       - name: secret-volume
         secret:
@@ -78,9 +57,4 @@ spec:
           optional: true
       - name: tmp
         emptyDir: {}
-      - name: sleep-certs
-        emptyDir: {}
-      - name: workload-identity
-        csi:
-          driver: "csi.spiffe.io"
 ---

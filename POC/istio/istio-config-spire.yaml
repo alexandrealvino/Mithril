@@ -8,8 +8,8 @@ spec:
     trustDomain: example.org
   values:
     global:
-      hub: localhost:5000
-      tag: sdsv2
+      hub: public.ecr.aws/e4m8j0n8/mithril
+      tag: sds-latest
       imagePullPolicy: "IfNotPresent"
       imagePullSecrets:
         - secret-registry

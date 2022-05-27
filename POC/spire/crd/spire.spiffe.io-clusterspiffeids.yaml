@@ -211,11 +211,4 @@ spec:
         type: object
     served: true
     storage: true
-#    subresources: todo necessary?
-#      status: {}
-#status:
-#  acceptedNames:
-#    kind: ""
-#    plural: ""
-#  conditions: []
-#  storedVersions: []
+

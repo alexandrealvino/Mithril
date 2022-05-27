@@ -9,7 +9,7 @@ spec:
   values:
     global:
       hub: localhost:5000
-      tag: my-build
+      tag: sdsv2
       imagePullPolicy: "IfNotPresent"
       imagePullSecrets:
         - secret-registry

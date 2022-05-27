@@ -68,8 +68,8 @@ spec:
       labels:
         app: details
         version: v1
-        spireSpiffeid: workloads
-      annotations:        
+        spireSpiffeid: workloads-fail
+      annotations:
         inject.istio.io/templates: "sidecar,spire"
     spec:
       serviceAccountName: bookinfo-details
@@ -124,8 +124,8 @@ spec:
       labels:
         app: ratings
         version: v1
-        spireSpiffeid: workloads
-      annotations:        
+        spireSpiffeid: workloads-fail
+      annotations:
         inject.istio.io/templates: "sidecar,spire"
     spec:
       serviceAccountName: bookinfo-ratings
@@ -180,8 +180,8 @@ spec:
       labels:
         app: reviews
         version: v1
-        spireSpiffeid: workloads
-      annotations:        
+        spireSpiffeid: workloads-fail
+      annotations:
         inject.istio.io/templates: "sidecar,spire"
     spec:
       serviceAccountName: bookinfo-reviews
@@ -225,7 +225,7 @@ spec:
       labels:
         app: reviews
         version: v2
-        spireSpiffeid: workloads
+        spireSpiffeid: workloads-fail
       annotations:
         inject.istio.io/templates: "sidecar,spire"
     spec:
@@ -270,7 +270,7 @@ spec:
       labels:
         app: reviews
         version: v3
-        spireSpiffeid: workloads
+        spireSpiffeid: workloads-fail
       annotations:
         inject.istio.io/templates: "sidecar,spire"
     spec:

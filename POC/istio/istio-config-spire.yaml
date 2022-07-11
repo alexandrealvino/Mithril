@@ -8,8 +8,8 @@ spec:
     trustDomain: example.org
   values:
     global:
-      hub: public.ecr.aws/e4m8j0n8/mithril
-      tag: sds-latest
+      hub: docker.io/istio
+      tag: 1.14.1
       imagePullPolicy: "IfNotPresent"
       imagePullSecrets:
         - secret-registry

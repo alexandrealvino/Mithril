@@ -14,5 +14,5 @@ else
     echo "No TAG set, using default value from istio-config.yaml"
 fi
 
-../istioctl install -f istio-config-spire-federation-server.yaml --skip-confirmation $args
+istioctl install -f istio-config-spire-federation-server.yaml --skip-confirmation $args
 kubectl apply -f auth.yaml
